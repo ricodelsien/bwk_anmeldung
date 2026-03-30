@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#323276" />
+  <title>AVöD · Tutorenbereich</title>
+  <script src="bwk-dev-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="layout-mode.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bt-page-admin">
+  <div class="bt-dev-banner" data-bwk-dev-banner hidden>
+    <div class="bt-dev-banner-inner">
+      <p class="bt-dev-banner-msg">
+        <strong>Demonstrator</strong> · Tutorenbereich (<code>?dev=1</code>) —
+        <a href="index.html?dev=1">Demo</a>
+        · <a href="admin.html">Normaler Admin</a>
+      </p>
+      <div class="bt-dev-banner-actions">
+        <button type="button" class="bt-btn bt-btn-banner" id="btBtnDevReset" title="Demo-Anmeldungen und Einstellungen neu aufsetzen">
+          Demo-Daten zurücksetzen
+        </button>
+        <button type="button" class="bt-dev-banner-hide" data-bwk-dev-banner-hide aria-label="Hinweiszeile ausblenden">
+          Ausblenden
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-topbar" aria-label="Kurzlinks">
+    <a href="https://bwk-berlin.de/avoed.html">Zur AVöD-Infoseite</a>
+    <a href="https://bwk-berlin.de/kontakt-103.html">Kontakt &amp; Anfahrt</a>
+    <a href="index.html">Zur Terminanmeldung</a>
+  </div>
+
+  <header class="bt-header">
+    <div class="bt-header-inner">
+      <a class="bt-logo-link" href="https://bwk-berlin.de/" title="Zur BWK-Startseite">
+        <img src="bwk_rgb_pos-002.webp" width="400" height="160" alt="BWK – Bildungswerk in Kreuzberg GmbH" decoding="async" />
+      </a>
+      <div class="bt-brand">
+        <span class="bt-brand-title">AVöD · Tutorenbereich</span>
+        <span class="bt-brand-sub">Anmeldungen zum Bewerbertag</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="bt-shell">
+    <section class="bt-card bt-card--plain" id="btLoginCard">
+      <div class="bt-card-body">
+        <header class="bt-card-header">
+          <h1 class="bt-card-title">Anmelden</h1>
+          <p class="bt-card-text">
+            Im Demonstrator (<code>?dev=1</code>) nutzen Sie die Zugangsdaten unter „Demonstrator-Hilfe“.
+          </p>
+        </header>
+        <form class="bt-form" id="btLoginForm">
+          <fieldset class="bt-fieldset bt-fieldset-small">
+            <div class="bt-grid">
+              <label class="bt-field bt-field-full">
+                <span>E-Mail</span>
+                <input name="email" type="email" class="bt-input" required autocomplete="username" />
+              </label>
+              <label class="bt-field bt-field-full">
+                <span>Passwort</span>
+                <input name="password" type="password" class="bt-input" required autocomplete="current-password" />
+              </label>
+            </div>
+          </fieldset>
+          <details class="bt-admin-dev-login" id="btDevLoginHelp" hidden>
+            <summary>Demonstrator-Hilfe · Demo-Zugang</summary>
+            <p class="bt-hint">
+              Nur mit <code>?dev=1</code> auf localhost
+            </p>
+            <table class="bt-admin-demo-creds" aria-label="Demo-Zugang">
+              <tbody>
+                <tr><th scope="row">E-Mail</th><td><code>lehrer@bwk-demo.de</code></td></tr>
+                <tr><th scope="row">Passwort</th><td><code>Bewerbertag-Demo!</code></td></tr>
+              </tbody>
+            </table>
+          </details>
+          <div class="bt-actions">
+            <button type="submit" class="bt-btn">Anmelden</button>
+            <p class="bt-hint" id="btLoginHint">Zugangsdaten werden in FB/Auth verwaltet. NS</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="bt-card bt-card--plain" id="btAdminCard" hidden>
+      <div class="bt-card-body">
+        <header class="bt-card-header bt-admin-head-simple">
+          <div>
+            <h1 class="bt-card-title bt-admin-title-main">Bewerbertag-Verwaltung</h1>
+            <p class="bt-card-text bt-admin-meta" id="btAdminUser" aria-live="polite"></p>
+            <p class="bt-card-text bt-admin-meta">Daten in Cloud-DB.</p>
+          </div>
+          <button type="button" class="bt-btn bt-btn-ghost" id="btBtnLogout">Abmelden</button>
+        </header>
+
+        <nav class="bt-admin-tabs" aria-label="Bereiche">
+          <button type="button" class="bt-admin-tab is-active" data-bt-tab="list" aria-selected="true">Anmeldungen</button>
+          <button type="button" class="bt-admin-tab" data-bt-tab="settings" aria-selected="false">Termine &amp; Hinweistext</button>
+        </nav>
+
+        <section class="bt-admin-panel" id="btPanelList" data-bt-panel="list">
+          <div id="btAdminSlotOverview" class="bt-admin-slot-overview" hidden></div>
+          <div class="bt-admin-toolbar">
+            <button type="button" class="bt-btn bt-btn-secondary" id="btBtnRefresh">Aktualisieren</button>
+            <label class="bt-admin-filter">
+              <span>Filter</span>
+              <select id="btFilterPreset" class="bt-input bt-input-compact">
+                <option value="all">Alle</option>
+                <option value="active">Nur aktive</option>
+                <option value="spam">Nur Spam</option>
+                <option value="dups">Duplikate</option>
+              </select>
+            </label>
+            <details class="bt-admin-toolbar-more">
+              <summary>Export &amp; Mehr</summary>
+              <div class="bt-admin-toolbar-more-inner">
+                <button type="button" class="bt-btn bt-btn-ghost bt-btn-xs" id="btBtnCsv" title="UTF-8 mit BOM, Semikolon-Trennung, deutsche Spaltenüberschriften (Excel)">CSV exportieren</button>
+                <button type="button" class="bt-btn bt-btn-ghost bt-btn-xs" id="btBtnCopyEmails">E-Mails kopieren</button>
+                <button type="button" class="bt-btn bt-btn-ghost bt-btn-xs" id="btBtnMailTemplate">E-Mail-Vorlage</button>
+                <button type="button" class="bt-btn bt-btn-warn bt-btn-xs" id="btBtnBulkSpam">Auswahl → Spam</button>
+                <button type="button" class="bt-btn bt-btn-danger bt-btn-xs" id="btBtnBulkDelete">Auswahl löschen</button>
+              </div>
+            </details>
+            <div class="bt-admin-toolbar-row2">
+              <label class="bt-admin-filter">
+                <span class="bt-sr-only">Suche</span>
+                <input type="search" id="btFilterText" class="bt-input bt-input-compact" placeholder="Suche …" autocomplete="off" />
+              </label>
+              <label class="bt-admin-filter">
+                <span>Termin</span>
+                <select id="btFilterSlot" class="bt-input bt-input-compact">
+                  <option value="">alle</option>
+                </select>
+              </label>
+              <label class="bt-admin-filter">
+                <span>Kategorie</span>
+                <select id="btFilterCategory" class="bt-input bt-input-compact" title="Nach Bearbeitungskategorie filtern"></select>
+              </label>
+              <label class="bt-admin-filter" title="Gilt für alle aktuell angehakten Tabellenzeilen">
+                <span>Markierte</span>
+                <select id="btBulkCategory" class="bt-input bt-input-compact" aria-label="Neue Kategorie für die Auswahl"></select>
+              </label>
+              <button type="button" class="bt-btn bt-btn-secondary bt-btn-xs" id="btBtnBulkCategory">
+                Kategorie für Auswahl setzen
+              </button>
+              <label class="bt-admin-check">
+                <input type="checkbox" id="btIncludeSpam" />
+                <span>Spam</span>
+              </label>
+              <p class="bt-admin-status" id="btAdminStatus" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="bt-admin-table-wrap">
+            <table class="bt-admin-table" id="btAdminTable">
+              <thead>
+                <tr>
+                  <th class="bt-admin-th-check" scope="col">
+                    <input type="checkbox" id="btSelectAll" aria-label="Alle sichtbaren Zeilen auswählen" />
+                  </th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Zeit</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">E-Mail</th>
+                  <th scope="col" title="Sofern erfasst (Cloud Function oder Fallback-Dienst)">IP</th>
+                  <th scope="col">Termin</th>
+                  <th scope="col">Kategorie</th>
+                  <th scope="col">Aktion</th>
+                </tr>
+              </thead>
+              <tbody id="btAdminTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="bt-admin-panel" id="btPanelSettings" data-bt-panel="settings" hidden>
+          <p class="bt-hint">
+            Diese Einstellungen erscheinen auf der Anmeldeseite.
+          </p>
+          <form class="bt-form bt-admin-settings-form" id="btSettingsForm">
+            <label class="bt-field bt-field-full">
+              <span>Termine auf der Anmeldeseite anbieten</span>
+              <select name="useSlots" id="btSetUseSlots" class="bt-input">
+                <option value="true">Ja — Termine zur Auswahl</option>
+                <option value="false">Nein — nur Hinweistext anzeigen</option>
+              </select>
+            </label>
+            <div class="bt-field bt-field-full bt-rich-hint-field">
+              <span class="bt-rich-hint-label-text">Hinweistext, wenn keine Termine aktiv sind</span>
+              <p class="bt-hint bt-rich-hint-editor-note">
+                Formatierung über die Leiste: fett, kursiv, unterstrichen, BWK-Farben (Markierung setzen oder zuerst Farbe wählen), Listen mit Punkten, Zahlen oder Buchstaben.
+              </p>
+              <div class="bt-rich-hint-toolbar" role="toolbar" aria-label="Hinweistext formatieren">
+                <button type="button" class="bt-rich-hint-cmd" data-rich-hint-cmd="bold" title="Fett" aria-label="Fett">
+                  <strong>B</strong>
+                </button>
+                <button type="button" class="bt-rich-hint-cmd" data-rich-hint-cmd="italic" title="Kursiv" aria-label="Kursiv">
+                  <em>K</em>
+                </button>
+                <button type="button" class="bt-rich-hint-cmd" data-rich-hint-cmd="underline" title="Unterstrichen" aria-label="Unterstrichen">
+                  <u>U</u>
+                </button>
+                <label class="bt-rich-hint-color-label">
+                  <span id="btRichHintColorLabel">Farbe</span>
+                  <select class="bt-input bt-input-compact bt-rich-hint-color" id="btRichHintColor" aria-labelledby="btRichHintColorLabel">
+                    <option value="">Standard</option>
+                    <option value="#323276">Navy</option>
+                    <option value="#436aad">Blau</option>
+                    <option value="#5b347e">Violett</option>
+                    <option value="#d53a96">Magenta</option>
+                    <option value="#2a2d66">Tinte</option>
+                    <option value="#dbe11d">Lime</option>
+                    <option value="#f0f0ee">Hellgrau</option>
+                    <option value="#ffffff">Weiß</option>
+                  </select>
+                </label>
+                <button type="button" class="bt-rich-hint-cmd" data-rich-hint-cmd="ul" title="Aufzählung mit Punkten" aria-label="Aufzählung mit Punkten">
+                  • Liste
+                </button>
+                <button type="button" class="bt-rich-hint-cmd" data-rich-hint-cmd="ol" title="Nummerierte Liste" aria-label="Nummerierte Liste">
+                  1. Liste
+                </button>
+                <button type="button" class="bt-rich-hint-cmd" data-rich-hint-cmd="olAlpha" title="Liste mit Buchstaben a. b. c." aria-label="Liste mit Buchstaben">
+                  a. Liste
+                </button>
+              </div>
+              <div
+                id="btSetInfoRich"
+                class="bt-input bt-rich-hint-editable"
+                contenteditable="true"
+                role="textbox"
+                aria-multiline="true"
+                spellcheck="true"
+                data-placeholder="Hinweis für Bewerber/-innen …"
+              ></div>
+              <textarea name="infoWhenNoSlots" id="btSetInfo" hidden aria-hidden="true"></textarea>
+            </div>
+            <fieldset class="bt-fieldset">
+              <legend>Termine (Karten auf der Anmeldeseite)</legend>
+              <p class="bt-hint" style="margin-top: 0">
+                Wählen Sie eine Darstellung für <strong>alle</strong> Termine: entweder mit <strong>Datum und Uhrzeit</strong> oder als <strong>Freitext</strong>.
+              </p>
+              <div class="bt-admin-slots-type" role="radiogroup" aria-label="Art der Termine">
+                <label class="bt-admin-radio-line">
+                  <input type="radio" name="btSlotsDisplayType" value="date" checked />
+                  Mit Datum und Uhrzeit
+                </label>
+                <label class="bt-admin-radio-line">
+                  <input type="radio" name="btSlotsDisplayType" value="freetext" />
+                  Als Freitext
+                </label>
+              </div>
+              <div id="btSlotsEditor" class="bt-slots-editor-simple"></div>
+              <div class="bt-actions" style="margin-top: 12px">
+                <button type="button" class="bt-btn bt-btn-secondary" id="btBtnAddSlot">+ Weiteren Termin</button>
+              </div>
+              <div id="btSlotCapacitySummary" class="bt-admin-capacity-summary" hidden></div>
+              <details class="bt-admin-dev-login" style="margin-top: 16px">
+                <summary>-Raw JSON Data -> Evaluation für später NS</summary>
+                <p class="bt-hint bt-admin-dev-login-note">Nur zur Kontrolle. Beim Speichern wird dieser Inhalt aus dem Formular oben neu geschrieben. NS</p>
+                <label class="bt-field bt-field-full">
+                  <span class="bt-sr-only">Slots JSON</span>
+                  <textarea name="slotsJson" id="btSetSlotsJson" rows="6" class="bt-input bt-textarea bt-admin-mono" spellcheck="false"></textarea>
+                </label>
+              </details>
+            </fieldset>
+            <div class="bt-actions">
+              <button type="submit" class="bt-btn" id="btBtnSaveSettings">Einstellungen speichern</button>
+              <p class="bt-hint" id="btSettingsHint"></p>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bt-site-footer">
+    <nav aria-label="BWK">
+      <a href="https://bwk-berlin.de/avoed.html">AVöD-Übersicht</a>
+      <a href="https://bwk-berlin.de/impressum.html">Impressum</a>
+      <a href="https://bwk-berlin.de/datenschutz.html">Datenschutz</a>
+    </nav>
+    <p>BWK BildungsWerk in Kreuzberg GmbH</p>
+  </footer>
+
+  <!-- Detail-Popup für einzelne Anmeldung -->
+  <div id="btDetailModal" class="bt-admin-modal" hidden>
+    <div class="bt-admin-modal-backdrop" data-bt-detail-close tabindex="-1" aria-hidden="true"></div>
+    <div class="bt-admin-modal-box" role="dialog" aria-labelledby="btDetailModalTitle">
+      <h2 class="bt-card-title" id="btDetailModalTitle" style="margin-top:0">Anmeldungs-Details</h2>
+      <dl class="bt-detail-list" id="btDetailList"></dl>
+      <div class="bt-actions" style="margin-top:16px">
+        <button type="button" class="bt-btn bt-btn-ghost" data-bt-detail-close>Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="btMailModal" class="bt-admin-modal" hidden>
+    <div class="bt-admin-modal-backdrop" data-bt-mail-close tabindex="-1" aria-hidden="true"></div>
+    <div class="bt-admin-modal-box" role="dialog" aria-labelledby="btMailModalTitle">
+      <h2 class="bt-card-title" id="btMailModalTitle" style="margin-top:0">Vorlage für Rundmail</h2>
+      <p class="bt-hint">Zuerst die Empfängeradressen kopieren (z. B. als BCC in Outlook), dann Betreff und Text anpassen.</p>
+      <label class="bt-field bt-field-full"><span>Betreff</span><input type="text" class="bt-input" id="btMailSubject" /></label>
+      <label class="bt-field bt-field-full"><span>Nachricht</span><textarea class="bt-input bt-textarea" id="btMailBody" rows="8"></textarea></label>
+      <div class="bt-actions" style="margin-top:12px">
+        <button type="button" class="bt-btn bt-btn-ghost" data-bt-mail-close>Schließen</button>
+        <button type="button" class="bt-btn" id="btMailOpenDraft">Mail-Programm öffnen (Entwurf)</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="btParticipantMailModal" class="bt-admin-modal" hidden>
+    <div class="bt-admin-modal-backdrop" data-bt-participant-mail-close tabindex="-1" aria-hidden="true"></div>
+    <div class="bt-admin-modal-box bt-admin-modal-box--wide" role="dialog" aria-labelledby="btParticipantMailTitle">
+      <h2 class="bt-card-title" id="btParticipantMailTitle" style="margin-top:0">Teilnehmer/-innen informieren</h2>
+      <p class="bt-hint" id="btParticipantMailContext" style="margin-top:0"></p>
+      <p class="bt-hint">
+        Es werden nur <strong>direkt zugewiesene</strong>, aktive Bewerber/-innen dieses Termins adressiert.
+        Anhänge (z. B. Stammblätter, Hausaufgaben) fügen Sie im E-Mail-Programm hinzu — der Browser kann keine Dateien automatisch an eine Mail anhängen.
+      </p>
+      <label class="bt-field bt-field-full">
+        <span>Vorlage</span>
+        <select class="bt-input" id="btParticipantMailTemplate" aria-label="Nachrichtenvorlage">
+          <option value="stammblatt">Stammblätter &amp; Terminbestätigung</option>
+          <option value="hausaufgaben">Hausaufgaben (Bewerbungsrunde)</option>
+          <option value="frei">Freier Text (nur Bezugstext)</option>
+        </select>
+      </label>
+      <label class="bt-field bt-field-full"><span>Betreff</span><input type="text" class="bt-input" id="btParticipantMailSubject" /></label>
+      <label class="bt-field bt-field-full"><span>Nachricht</span><textarea class="bt-input bt-textarea" id="btParticipantMailBody" rows="12"></textarea></label>
+      <label class="bt-field bt-field-full">
+        <span>Geplante Anhänge (zur Erinnerung — Namen erscheinen im Text)</span>
+        <input type="file" class="bt-input" id="btParticipantMailFiles" multiple />
+      </label>
+      <div class="bt-actions" style="margin-top:12px;flex-wrap:wrap">
+        <button type="button" class="bt-btn bt-btn-ghost" data-bt-participant-mail-close>Schließen</button>
+        <button type="button" class="bt-btn bt-btn-secondary" id="btParticipantMailCopyRecipients">Empfänger kopieren (BCC)</button>
+        <button type="button" class="bt-btn" id="btParticipantMailOpenDraft">Mail-Programm öffnen (Entwurf)</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="bewerbertag-defaults.js"></script>
+  <script src="bewerbertag-slots.js"></script>
+  <script src="bt-hint-html.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    window.bwkInitFirebaseApp();
+  </script>
+  <script src="bt-dev-firestore-shim.js"></script>
+  <script src="bwk-dev-banner-toggle.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

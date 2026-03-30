@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#323276" />
+  <meta name="description" content="Terminanmeldung zum Bewerbertag – AVöD am BWK Berlin." />
+  <title>AVöD · Bewerbertag – Terminanmeldung | BWK</title>
+  <script src="bwk-dev-mode.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <script src="layout-mode.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bt-dev-banner" data-bwk-dev-banner hidden>
+    <div class="bt-dev-banner-inner">
+      <p class="bt-dev-banner-msg">
+        <strong>Demonstrator</strong> · Demo (<code>?dev=1</code>) —
+        <a href="admin.html?dev=1">Tutorenbereich (Demo)</a>
+      </p>
+      <button type="button" class="bt-dev-banner-hide" data-bwk-dev-banner-hide aria-label="Hinweiszeile ausblenden">
+        Ausblenden
+      </button>
+    </div>
+  </div>
+
+  <a class="bt-skip" href="#bt-main">Zum Formular springen</a>
+
+  <div class="bt-topbar" aria-label="Kurzlinks">
+    <a href="https://bwk-berlin.de/avoed.html">Zur AVöD-Infoseite</a>
+    <a href="https://bwk-berlin.de/kontakt-103.html">Kontakt &amp; Anfahrt</a>
+  </div>
+
+  <header class="bt-header">
+    <div class="bt-header-inner">
+      <a class="bt-logo-link" href="https://bwk-berlin.de/" title="Zur BWK-Startseite">
+        <img src="bwk_rgb_pos-002.webp" width="400" height="160" alt="BWK – Bildungswerk in Kreuzberg GmbH" decoding="async" />
+      </a>
+      <div class="bt-brand">
+        <span class="bt-brand-title">Ausbildungsvorbereitung Öffentlicher Dienst</span>
+        <span class="bt-brand-sub">Terminanmeldung zum Bewerbertag · AVöD</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="bt-shell" id="bt-main">
+    <section class="bt-card" aria-labelledby="bt-form-title">
+      <div class="bt-card-split">
+        <div class="bt-card-hero">
+          <div class="bt-card-hero-inner">
+            <p class="bt-card-kicker">BWK Berlin · AVöD</p>
+            <h1 class="bt-card-title" id="bt-form-title">Anmeldung zum Bewerbertag</h1>
+            <p class="bt-card-text">
+              Sie interessieren sich für eine Ausbildung bei der Polizei Berlin, der Berliner Justiz oder der Berliner Verwaltung?
+              Wählen Sie einen Termin – wir bestätigen Ihre Teilnahme und beantworten Fragen zur Ausbildungsvorbereitung.
+            </p>
+            <div class="bt-card-meta">
+              <strong>Lehrgang:</strong> 07.04. bis 18.12.2026 ·
+              <strong>Sommerklasse:</strong> Beginn ab 24.08.2026 möglich.<br />
+              Rückfragen: <a href="mailto:avoed@bwk-berlin.de">avoed@bwk-berlin.de</a> (Lehrgangsleitung)
+            </div>
+          </div>
+        </div>
+
+        <div class="bt-card-body">
+          <form class="bt-form" id="bewerberForm">
+
+            <!-- ── Termin wählen ──────────────────────────── -->
+            <div class="bt-form-section">
+              <p class="bt-form-section-label">Termin wählen</p>
+              <p class="bt-hint" id="bt-no-slots-info" hidden role="status"></p>
+              <div id="bt-fs-slots">
+                <div class="bt-termin-list" id="btTermineList" role="radiogroup"
+                     aria-label="Verfügbare Termine"></div>
+              </div>
+            </div>
+
+            <!-- ── Persönliche Angaben ────────────────────── -->
+            <fieldset class="bt-fieldset bt-fs-person">
+              <legend>Persönliche Angaben</legend>
+
+              <!-- Zeile 1: Anrede / Vorname / Nachname -->
+              <div class="bt-grid bt-grid-3">
+                <label class="bt-field">
+                  <span>Anrede*</span>
+                  <select name="salutation" class="bt-input" required autocomplete="honorific-prefix">
+                    <option value="">Bitte auswählen …</option>
+                    <option value="frau">Frau</option>
+                    <option value="herr">Herr</option>
+                    <option value="divers">Divers</option>
+                  </select>
+                </label>
+                <label class="bt-field">
+                  <span>Vorname(n)*</span>
+                  <input name="firstName" class="bt-input" required autocomplete="given-name" />
+                </label>
+                <label class="bt-field">
+                  <span>Nachname*</span>
+                  <input name="lastName" class="bt-input" required autocomplete="family-name" />
+                </label>
+              </div>
+
+              <!-- Zeile 2: Staatsangehörigkeit (links) + E-Mail/Tel/Kontakt/Notiz (rechts) -->
+              <div class="bt-personal-split">
+                <div class="bt-personal-left">
+                  <p class="bt-citizenship-question">
+                    Sind Sie im Besitz der deutschen Staatsangehörigkeit, der eines EU/EWR-Mitgliedes
+                    oder haben gültigen Aufenthaltstitel?*
+                  </p>
+                  <div class="bt-radio-group" role="radiogroup" aria-label="Staatsangehörigkeit">
+                    <label class="bt-radio-line">
+                      <input type="radio" name="citizenship" value="deutsch" required />
+                      Deutscher Staatsbürger
+                    </label>
+                    <label class="bt-radio-line">
+                      <input type="radio" name="citizenship" value="eu_ewr" />
+                      EU/EWR-Bürger
+                    </label>
+                    <label class="bt-radio-line">
+                      <input type="radio" name="citizenship" value="aufenthaltstitel" />
+                      Gültiger Aufenthaltstitel
+                    </label>
+                    <label class="bt-radio-line">
+                      <input type="radio" name="citizenship" value="beantragt" />
+                      Aufenthaltstitel beantragt
+                    </label>
+                    <label class="bt-radio-line">
+                      <input type="radio" name="citizenship" value="keins" />
+                      Keins davon
+                    </label>
+                  </div>
+                  <p class="bt-citizenship-note">
+                    Für die Ausbildung im öffentlichen Dienst ist es in vielen Fällen erforderlich,
+                    dass Sie eine deutsche oder EU(EWR)-Staatsangehörigkeit besitzen. In einigen
+                    Bereichen ist ein gültiger Aufenthaltstitel oder die laufende Beantragung ausreichend.
+                    <br /><br /><span class="bt-pflicht-hint">*Pflichtfelder</span>
+                  </p>
+                </div>
+                <div class="bt-personal-right">
+                  <label class="bt-field">
+                    <span>E-Mail*</span>
+                    <input name="email" type="email" class="bt-input" required autocomplete="email" />
+                  </label>
+                  <label class="bt-field" id="bt-phone-field">
+                    <span id="bt-phone-label">Telefon (optional)</span>
+                    <input name="phone" type="tel" class="bt-input" autocomplete="tel" id="bt-phone-input" />
+                  </label>
+                  <label class="bt-field">
+                    <span>Wie sollen wir Sie kontaktieren?*</span>
+                    <select name="contactType" class="bt-input" required>
+                      <option value="">Bitte auswählen …</option>
+                      <option value="mail">E-Mail</option>
+                      <option value="phone">Telefon</option>
+                      <option value="both">E-Mail &amp; Telefon</option>
+                    </select>
+                  </label>
+                  <div class="bt-field">
+                    <label class="bt-field-label" for="bt-message">Fragen oder Hinweise (optional)</label>
+                    <textarea name="message" id="bt-message" rows="3" class="bt-input bt-textarea"
+                              maxlength="150" oninput="document.getElementById('bt-msg-count').textContent=this.value.length"></textarea>
+                    <span class="bt-char-count"><span id="bt-msg-count">0</span> / 150</span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- ── Datenschutz ─────────────────────────────── -->
+            <fieldset class="bt-fieldset bt-fieldset-small bt-fs-privacy">
+              <label class="bt-checkbox">
+                <input type="checkbox" name="privacy" required />
+                <span>Ich bin damit einverstanden, dass meine Angaben zur Kontaktaufnahme und Terminabstimmung verarbeitet werden.</span>
+              </label>
+            </fieldset>
+
+            <div class="bt-actions">
+              <button type="submit" class="bt-btn" id="bewerberSubmit">Anmeldung abschicken</button>
+              <p class="bt-hint" id="bewerberHint">
+                Sie erhalten eine Bestätigung an die von Ihnen angegebene E-Mail-Adresse.
+              </p>
+            </div>
+          </form>
+
+          <div class="bt-success" id="bewerberSuccess" hidden role="status">
+            <div class="bt-success-icon" aria-hidden="true">✓</div>
+            <h2>Vielen Dank für Ihre Anmeldung!</h2>
+            <p>
+              Wir haben Ihre Anfrage für den Bewerbertag erhalten und melden uns so schnell wie möglich mit einer Bestätigung und
+              weiteren Informationen zum AVöD-Lehrgang.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bt-site-footer">
+    <nav aria-label="Rechtliches und BWK">
+      <a href="https://bwk-berlin.de/avoed.html">AVöD-Übersicht</a>
+      <a href="https://bwk-berlin.de/impressum.html">Impressum</a>
+      <a href="https://bwk-berlin.de/datenschutz.html">Datenschutz</a>
+    </nav>
+    <p>
+      BWK BildungsWerk in Kreuzberg GmbH · Cuvrystr. 34, 10997 Berlin ·
+      <a href="tel:+49306179290">030 61 79 29 - 0</a>
+    </p>
+  </footer>
+
+  <script src="bewerbertag-defaults.js"></script>
+  <script src="bewerbertag-slots.js"></script>
+  <script src="bt-hint-html.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-functions-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    window.bwkInitFirebaseApp();
+  </script>
+  <script src="bt-dev-firestore-shim.js"></script>
+  <script>
+    window.bewerbertagDb =
+      window.BWK_BT_DEV_MODE && window.__bwkDevFirestore ? window.__bwkDevFirestore : firebase.firestore();
+  </script>
+  <script src="bwk-dev-banner-toggle.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
