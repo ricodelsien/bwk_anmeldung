@@ -725,7 +725,7 @@
             'Im Anhang (bitte im Mailprogramm ergänzen) finden Sie die Stammblätter. Füllen Sie diese vor dem Termin aus und schicken uns diese umgehend zurück.\n\n' +
             'Melden Sie sich bei Rückfragen gerne bei uns.\n\n' +
             'Mit freundlichen Grüßen\n' +
-            'Hartmut Schulze',
+            'Hartmut Schulze\n' +
             'Lehrgangsleitung AVöD',
         };
       }
@@ -741,7 +741,7 @@
             ') senden wir Ihnen die Hausaufgaben für die laufende Bewerbungsrunde.\n\n' +
             'Die Aufgaben finden Sie im Anhang (bitte im Mailprogramm beifügen). Bei Fragen melden Sie sich gern.\n\n' +
             'Mit freundlichen Grüßen\n' +
-            'Hartmut Schulze',
+            'Hartmut Schulze\n' +
             'Lehrgangsleitung AVöD',
         };
       }
@@ -757,7 +757,7 @@
           '\n\n' +
           '(Hier Ihren freien Text einfügen.)\n\n' +
           'Mit freundlichen Grüßen\n' +
-            'Hartmut Schulze',
+            'Hartmut Schulze\n' +
             'Lehrgangsleitung AVöD',
       };
     }
