@@ -724,7 +724,8 @@
             'Im Anhang (bitte im Mailprogramm ergänzen) finden Sie die Stammblätter. Füllen Sie diese vor dem Termin aus und bringen Sie sie mit.\n\n' +
             'Bei Rückfragen erreichen Sie uns wie gewohnt.\n\n' +
             'Mit freundlichen Grüßen\n' +
-            'Ihr Team der BWK',
+            'Hartmut Schulze',
+            'Lehrgangsleitung AVöD',
         };
       }
       if (templateKey === 'hausaufgaben') {
@@ -739,7 +740,8 @@
             ') senden wir Ihnen die Hausaufgaben für die laufende Bewerbungsrunde.\n\n' +
             'Die Aufgaben finden Sie im Anhang (bitte im Mailprogramm beifügen). Bei Fragen melden Sie sich gern.\n\n' +
             'Mit freundlichen Grüßen\n' +
-            'Ihr Team der BWK',
+            'Hartmut Schulze',
+            'Lehrgangsleitung AVöD',
         };
       }
       return {
@@ -754,7 +756,8 @@
           '\n\n' +
           '(Hier Ihren freien Text einfügen.)\n\n' +
           'Mit freundlichen Grüßen\n' +
-          'Ihr Team der BWK',
+            'Hartmut Schulze',
+            'Lehrgangsleitung AVöD',
       };
     }
 
