@@ -9,7 +9,7 @@
     '(Hier den Link zur öffentlichen Anmeldung einfügen.)\n\n' +
     'Bei Fragen stehen wir Ihnen gerne zur Verfügung.\n\n' +
     'Mit freundlichen Grüßen\n' +
-    'Hartmut Schulze',
+    'Hartmut Schulze\n' +
     'Lehrgangsleitung AVöD';
 
   const DEFAULT_SLOT_SUB = 'Bewerbertag · AVöD Ausbildungsvorbereitung';
