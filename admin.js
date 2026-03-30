@@ -5,11 +5,12 @@
   const DEFAULT_MAIL_BODY =
     'Sehr geehrte Damen und Herren,\n\n' +
     'wir möchten Sie darüber informieren, dass neue Termine für den Bewerbertag zur Anmeldung freigegeben wurden.\n\n' +
-    'Bitte besuchen Sie unsere Terminseite und wählen Sie einen passenden Termin aus.\n' +
+    'Bitte besuchen Sie unseren Anmeldungsbereich und wählen Sie einen passenden Termin aus.\n' +
     '(Hier den Link zur öffentlichen Anmeldung einfügen.)\n\n' +
     'Bei Fragen stehen wir Ihnen gerne zur Verfügung.\n\n' +
     'Mit freundlichen Grüßen\n' +
-    'Hartmut Schulze';
+    'Hartmut Schulze',
+    'Lehrgangsleitung AVöD';
 
   const DEFAULT_SLOT_SUB = 'Bewerbertag · AVöD Ausbildungsvorbereitung';
 
@@ -721,8 +722,8 @@
             'Lehrgang / Kennung: ' +
             avod +
             '\n\n' +
-            'Im Anhang (bitte im Mailprogramm ergänzen) finden Sie die Stammblätter. Füllen Sie diese vor dem Termin aus und bringen Sie sie mit.\n\n' +
-            'Bei Rückfragen erreichen Sie uns wie gewohnt.\n\n' +
+            'Im Anhang (bitte im Mailprogramm ergänzen) finden Sie die Stammblätter. Füllen Sie diese vor dem Termin aus und schicken uns diese umgehend zurück.\n\n' +
+            'Melden Sie sich bei Rückfragen gerne bei uns.\n\n' +
             'Mit freundlichen Grüßen\n' +
             'Hartmut Schulze',
             'Lehrgangsleitung AVöD',
