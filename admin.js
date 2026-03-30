@@ -726,7 +726,7 @@
             'Melden Sie sich bei Rückfragen gerne bei uns.\n\n' +
             'Mit freundlichen Grüßen\n' +
             'Hartmut Schulze\n' +
-            'Lehrgangsleitung AVöD';
+            'Lehrgangsleitung AVöD',
         };
       }
       if (templateKey === 'hausaufgaben') {
@@ -742,7 +742,7 @@
             'Die Aufgaben finden Sie im Anhang (bitte im Mailprogramm beifügen). Bei Fragen melden Sie sich gern.\n\n' +
             'Mit freundlichen Grüßen\n' +
             'Hartmut Schulze\n' +
-            'Lehrgangsleitung AVöD';
+            'Lehrgangsleitung AVöD',
         };
       }
       return {
@@ -758,7 +758,7 @@
           '(Hier Ihren freien Text einfügen.)\n\n' +
           'Mit freundlichen Grüßen\n' +
             'Hartmut Schulze\n' +
-            'Lehrgangsleitung AVöD';
+            'Lehrgangsleitung AVöD',
       };
     }
 
